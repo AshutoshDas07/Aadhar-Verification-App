@@ -35,7 +35,7 @@
         android:layout_below="@id/linear_layout"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
-        android:text="Verify Your Aadhar"
+        android:text="Verify Your Aadhaar"
         android:textColor="#FFF"
         android:textSize="30dp"
         app:layout_constraintBottom_toTopOf="@+id/button"
