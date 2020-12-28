@@ -27,30 +27,29 @@ public class VerifyAadharActivity extends AppCompatActivity {
         NetworkInfo netInfo = conMgr.getActiveNetworkInfo();
         setWebView(netInfo);
      }
+     //initializing
     public void initialise(){
         webView=findViewById(R.id.webView);
         spinner=findViewById(R.id.progressBar1);
         view=findViewById(R.id.relative_layout);
     }
-
+    //setting webview
     public void setWebView(NetworkInfo netinfo){
+        webView.setWebViewClient(new CustomWebViewClient());
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setDomStorageEnabled(true);
+        webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
+        webView.loadUrl("https://resident.uidai.gov.in/verify");
+
         if(netinfo!=null&&(netinfo.getType()==ConnectivityManager.TYPE_MOBILE||netinfo.getType()==ConnectivityManager.TYPE_WIFI)){
-            webView.setWebViewClient(new CustomWebViewClient());
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setDomStorageEnabled(true);
-            webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
-            webView.loadUrl("https://resident.uidai.gov.in/verify");
+            //checking for all network connection
         } else{
-            webView.setWebViewClient(new CustomWebViewClient());
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.getSettings().setDomStorageEnabled(true);
-            webView.setOverScrollMode(WebView.OVER_SCROLL_NEVER);
-            webView.loadUrl("https://resident.uidai.gov.in/verify");
+            //If not connected show snackbar for tunring internet data
             Snackbar snackbar=Snackbar.make(view, "Check Internet Connection",Snackbar.LENGTH_LONG);
             snackbar.show();
         }
     }
-
+    //Back press overriden for webview
     @Override
     public void onBackPressed() {
         if(webView.getUrl().equals("https://resident.uidai.gov.in/verify")){
@@ -62,6 +61,7 @@ public class VerifyAadharActivity extends AppCompatActivity {
         }
     }
 
+    //ProgessBar Addition in Webview
     private class CustomWebViewClient extends WebViewClient{
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
